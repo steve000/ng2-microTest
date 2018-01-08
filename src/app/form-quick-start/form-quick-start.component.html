@@ -1,0 +1,66 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">用户注册</div>
+    <div class="panel-body">
+        <form class="form-horizontal" #registerForm="ngForm">
+            <!-- 内置校验规则 -->
+            <div class="form-group" [ngClass]="{'has-error': userName.invalid && (userName.dirty || userName.touched) }">
+                <label class="col-xs-2 control-label">用户名：</label>
+                <div class="col-xs-10">
+                    <!-- <input type="email" class="form-control" placeholder="Email" (keyup)="userNameChange($event)"> -->
+                    <input type="email" class="form-control" placeholder="Email" [(ngModel)]="regModel.userName" name="userName" required minlength="12" maxlength="32" #userName="ngModel">
+                    <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="text-danger">
+                        <div *ngIf="userName.errors.required">
+                            用户名不能为空
+                        </div>
+                        <div *ngIf="userName.errors.minlength">
+                            最小长度不能小于12个字符
+                        </div>
+                        <div *ngIf="userName.errors.maxlength">
+                            最大长度不能大于32个字符
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 自定义校验规则 -->
+            <div class="form-group" [ngClass]="{'has-error': mobile.invalid && (mobile.dirty || mobile.touched) }">
+                <label class="col-xs-2 control-label">手机号：</label>
+                <div class="col-xs-10">
+                    <input #mobile="ngModel" [(ngModel)]="regModel.mobile" name="mobile" ChineseMobileValidator class="form-control" placeholder="Mobile">
+                    <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)" class="text-danger">
+                        <div *ngIf="!mobile.errors.ChineseMobileValidator">
+                            请输入合法的手机号
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">密码：</label>
+                <div class="col-xs-10">
+                    <!-- <input #pwd type="password" class="form-control" placeholder="Password" (keyup)="0"> -->
+                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="regModel.password" name="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="rememberMe" [(ngModel)]="regModel.rememberMe">记住我
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <!-- <p>用户名：{{userName}}</p> -->
+        <!-- <p>密码：{{pwd.value}}</p> -->
+        <p>用户名：{{regModel.userName}}</p>
+        <p>用户名状态标志位： {{userName.valid}} {{userName.invalid}} {{userName.pending}} {{userName.pristine}} {{userName.dirty}} {{userName.untouched}} {{userName.touched}}
+        </p>
+        <p>手机号：{{mobile.value}}</p>
+        <p>密码：{{regModel.password}}</p>
+        <p>记住我：{{regModel.rememberMe}}</p>
+        <p>表单状态标志位： {{registerForm.valid}} {{registerForm.invalid}} {{registerForm.pending}} {{registerForm.pristine}} {{registerForm.dirty}} {{registerForm.untouched}} {{registerForm.touched}}
+        </p>
+    </div>
+</div>
